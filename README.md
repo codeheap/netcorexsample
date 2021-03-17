@@ -20,3 +20,4 @@ then
 Call e.g.: http://localhost:8081/?lat=-45.12&long=-12.36 
 
 (returns a list of generated wheaterforecasts)
+
