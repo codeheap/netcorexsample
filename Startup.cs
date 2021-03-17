@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using WeatherMicroservice;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace WheaterMan
 {
@@ -35,22 +36,22 @@ namespace WheaterMan
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
+            //if (env.isDevelopment())
+            //{
+              //  app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
+            //}
 
             app.UseHttpsRedirection();
             //app.UseStaticFiles();
@@ -74,7 +75,7 @@ namespace WheaterMan
                         forecast.Add(new WeatherReport(latitude.Value, longitude.Value, days));
                     }
 
-                    var json = JsonConvert.SerializeObject(forecast, Formatting.Indented);
+                    var json = JsonSerializer.Serialize(forecast);
                     context.Response.ContentType = "application/json; charset=utf-8";
                     await context.Response.WriteAsync(json);
                 }
