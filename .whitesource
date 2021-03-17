@@ -8,4 +8,7 @@
   "issueSettings": {
     "minSeverityLevel": "LOW"
   }
+  {
+    "foo":"bar"
+  }
 }
